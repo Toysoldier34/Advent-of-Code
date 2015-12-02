@@ -1,4 +1,5 @@
 var totalSqFeet:Number = 0;
+var ribbon:Number = 0;
 
 //Takes up 1000 lines
 var myString:String = (<![CDATA[29x13x26
@@ -1006,6 +1007,8 @@ var myArray:Array = myString.split("\n");  // "\n" possible alternative for line
 for (var i:int = 0; i < myArray.length; i++){
 	var s:String = myArray[i];
 	var a:Array = s.split("x");  //L=0,W=1,H=2  
+	
+	//Square Footage Calc
 	var lw:int = a[0]*a[1];
 	var wh:int = a[1]*a[2];
 	var hl:int = a[2]*a[0];
@@ -1021,7 +1024,31 @@ for (var i:int = 0; i < myArray.length; i++){
 	}else{
 		totalSqFeet += hl;//hl smallest
 	}
+	//Ribbon Length Calc
+	var l:int = a[0];
+	var w:int = a[1];
+	var h:int = a[2];
+	ribbon += (l*w*h);  //Bow
+	switch(Math.max.apply(null,a)){  //Finds largest
+		   case l:
+		   ribbon += (w+w+h+h);
+		   break;
+		   case w:
+		   ribbon += (l+l+h+h);
+		   break;
+		   case h:
+		   ribbon += (w+w+l+l);
+		   break;
+		   default:
+		   trace("Error");
+		   break;
+		   }
 }
 
-trace("Done:"+totalSqFeet+" Square Feet.");
+trace("Done:");
+trace("Wrapping Paper SqFeet:"+totalSqFeet);
+trace("Ribbon Length: "+ribbon);
+
+
+
 
